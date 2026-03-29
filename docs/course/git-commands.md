@@ -43,6 +43,46 @@ git push
 - `git commit` → save locally (creates a snapshot of your work)
 - `git push` → send changes to GitHub
 
+## 🧠 Merge Workflow
+
+Your branch moved from:
+A → B → C → D   (your branch)
+meanwhile Main also diverged
+A → B → X → Y   (main)
+Reconcile merges from Main to your branch:
+A → B → X → Y → C → D   (your branch updated)
+"behind" = missing commits
+"ahead"  = your new work
+
+PR Merge
+```bash
+git checkout feat/increment-1-server
+git fetch origin
+git merge origin/main
+git push
+```
+### Translation
+-	`git checkout` feat/increment-1-server → switch to the feature branch
+Think of it as: moving into the workspace where you’re doing this specific change
+- `git fetch origin` → download the latest changes from the remote (without applying them)
+Think of it as: checking for updates from the shared project without touching your work yet
+- `git merge origin/main` → bring the latest changes from the main branch into your current branch
+Think of it as: updating your branch so it stays in sync with the latest official version
+- `git push` → upload your updated branch to the remote repository
+Think of it as: sharing your updated work back to the team or GitHub
+
+Update Main NEED TO CLEANUP 
+```bash
+git checkout main
+git pull                 # get latest main
+git merge feat/increment-1-server   # add your feature
+git push origin main     # publish it
+
+```
+### Translation
+- `git checkout main`
+- `git pull`
+
 ---
 
 ## 🔍 Inspecting State
