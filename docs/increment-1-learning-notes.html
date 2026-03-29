@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Increment 1 Learning Notes</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --border: #dbe1ea;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --code-bg: #0f172a;
+      --code-text: #e5e7eb;
+      --ok: #166534;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #ffffff, #f3f7ff);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 28px 22px;
+      box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+      margin-bottom: 22px;
+    }
+    h1, h2, h3 { line-height: 1.25; margin: 0 0 12px; }
+    h1 { font-size: 2rem; }
+    h2 {
+      font-size: 1.25rem;
+      margin-top: 28px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    h3 { font-size: 1rem; margin-top: 18px; }
+    p, li { color: var(--text); }
+    .sub { color: var(--muted); margin-top: 6px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      margin: 18px 0;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+    }
+    .pill {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid #c7dcff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.88rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 14px 16px;
+      border-radius: 12px;
+      overflow-x: auto;
+      font-size: 0.93rem;
+      line-height: 1.5;
+      margin: 12px 0 0;
+    }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    ul, ol { padding-left: 22px; }
+    .checklist li { list-style: none; margin-left: -22px; padding-left: 22px; }
+    .checklist li::before {
+      content: "☐";
+      color: var(--accent);
+      font-weight: 700;
+      margin-right: 10px;
+    }
+    .ship {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+    .ship strong { color: var(--ok); }
+    .footer {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 26px;
+    }
+    .small { color: var(--muted); font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="pill">Increment 1</div>
+      <h1>Minimal Server Scaffold</h1>
+      <p class="sub">Build the smallest possible backend application that runs locally, responds to a health check, and defines a placeholder extraction endpoint.</p>
+    </section>
+
+    <section class="card">
+      <h2>Goal</h2>
+      <p>Build a minimal TypeScript Express server with:</p>
+      <ul>
+        <li><code>GET /health</code> → returns <code>{ ok: true }</code></li>
+        <li><code>POST /extract</code> → returns <code>501 not implemented</code></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Why this step exists</h2>
+      <p>Before adding OCR, LLM calls, traces, or UI, you need to understand how a backend app starts, accepts requests, and returns responses. This is the foundation for everything else.</p>
+    </section>
+
+    <section class="card">
+      <h2>What we are building</h2>
+      <p>A very small backend service with no business logic yet.</p>
+      <div class="grid">
+        <div>
+          <h3>Included</h3>
+          <ul>
+            <li>Local server</li>
+            <li>One health endpoint</li>
+            <li>One placeholder extract endpoint</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Not included yet</h3>
+          <ul>
+            <li>OCR</li>
+            <li>File upload</li>
+            <li>LLM calls</li>
+            <li>Frontend/UI</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Files introduced</h2>
+      <pre><code>src/
+  app.ts
+  server.ts
+  routes/
+    extract.ts
+
+evals/
+  manual_checks.md</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>Packages</h2>
+      <pre><code>npm install express
+npm install -D typescript tsx @types/node @types/express</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>Codex prompt</h2>
+      <pre><code>Create the smallest possible TypeScript Express server.
+
+Requirements:
+- Add src/app.ts, src/server.ts, src/routes/extract.ts
+- GET /health returns { ok: true }
+- POST /extract returns 501 with { "message": "not implemented" }
+- Add package.json script: "dev": "tsx src/server.ts"
+- Add minimal tsconfig.json
+- Keep code simple and readable
+- Do not add OCR, uploads, frontend, or extra features</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>How to run</h2>
+      <pre><code>npm run dev</code></pre>
+
+      <h3>Test in browser</h3>
+      <pre><code>http://localhost:3000/health</code></pre>
+      <p>Expected response:</p>
+      <pre><code>{ "ok": true }</code></pre>
+
+      <h3>Test in terminal</h3>
+      <pre><code>curl -X POST http://localhost:3000/extract</code></pre>
+      <p>Expected response:</p>
+      <pre><code>{ "message": "not implemented" }</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>Manual eval checks</h2>
+      <ul class="checklist">
+        <li>GET /health returns <code>{ ok: true }</code></li>
+        <li>POST /extract returns <code>501 not implemented</code></li>
+      </ul>
+    </section>
+
+    <section class="card ship">
+      <h2>Ship it criteria</h2>
+      <ul>
+        <li>Server starts without errors</li>
+        <li><code>/health</code> works in the browser</li>
+        <li><code>/extract</code> returns the correct placeholder response</li>
+        <li>Manual eval checks pass</li>
+        <li>Code is committed to Git</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Do not add yet</h2>
+      <ul>
+        <li>OCR</li>
+        <li>File uploads</li>
+        <li>LLM calls</li>
+        <li>Tracing</li>
+        <li>Eval automation</li>
+        <li>Frontend/UI</li>
+        <li>Multiple routes or abstractions</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Concepts to understand before moving on</h2>
+      <ol>
+        <li>What file starts the server?</li>
+        <li>What is a route?</li>
+        <li>What does <code>npm run dev</code> actually execute?</li>
+        <li>Why include <code>/extract</code> even though it does nothing yet?</li>
+        <li>Why is this step intentionally minimal?</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>Workflow recap</h2>
+      <pre><code>Write notes → Define eval → Generate code → Run → Verify → Commit</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>What comes next</h2>
+      <p>Increment 2 adds file upload, still with no OCR. The goal will be:</p>
+      <ul>
+        <li>accept one image</li>
+        <li>confirm it was received</li>
+        <li>return metadata</li>
+      </ul>
+    </section>
+
+    <p class="footer">Key takeaway: Do not build fast. Build in layers you fully understand.</p>
+  </div>
+</body>
+</html>
