@@ -4,21 +4,31 @@ This document captures the Git commands used while building the screenshot parse
 
 The goal is not to memorize everything, but to understand the **core workflow**.
 
+---
 
-🧭 Mental Model
+## 🧭 Mental Model
+
+```
 Write code → Stage → Commit → Push → Verify
+```
 
 ---
-## Setup
-.gitignore
+
+## ⚙️ Setup
+
+### `.gitignore`
 
 Used to prevent files from being tracked:
 
+```
 node_modules/
 .env
 .ssh/
 *.pem
- 
+```
+
+---
+
 ## 🔁 Core Workflow
 
 ```bash
@@ -26,49 +36,85 @@ git add .
 git commit -m "message"
 git push
 ```
-👉 Translation:
 
-- add → stage changes eg, new files, modified files, deletions
-- commit → save locally or creates a snapshot of your work
-- push → send to GitHub
+### Translation
+
+- `git add` → stage changes (new files, modified files, deletions)
+- `git commit` → save locally (creates a snapshot of your work)
+- `git push` → send changes to GitHub
+
 ---
 
 ## 🔍 Inspecting State
+
 ```bash
 git status
 git ls-files
 ```
-👉 Translation:
 
-- status → Shows: current branch, staged changes, unstaged changes, untracked files
-- ls-files → Lists all files currently tracked by Git.
--- Tracked vs Untracked
-Tracked = Git knows about it
-Untracked = new files not yet added
+### Translation
+
+- `git status` → shows current branch, staged changes, unstaged changes, untracked files
+- `git ls-files` → lists all files currently tracked by Git
+
+### Tracked vs Untracked
+
+- **Tracked** → Git knows about the file
+- **Untracked** → new file not yet added to Git
+
 ---
 
-🚀 Pushing to GitHub
-First push (set upstream)
+## 🚀 Pushing to GitHub
+
+### First push (set upstream)
+
+```bash
 git push -u origin <branch-name>
+```
 
 Example:
 
+```bash
 git push -u origin feat/increment-1-server
-Regular push
+```
+
+### Regular push
+
+```bash
 git push
+```
 
-👉 Works after upstream is set
+Works after upstream is set.
 
-🌿 Branch Basics
-Create and switch to new branch
+---
+
+## 🌿 Branch Basics
+
+### Create and switch to a new branch
+
+```bash
 git checkout -b <branch-name>
+```
 
 Example:
 
+```bash
 git checkout -b feat/increment-1-server
-Switch branches
+```
+
+### Switch branches
+
+```bash
 git checkout <branch-name>
-🧠 Key Concepts
-Local vs Remote
+```
+
+---
+
+## 🧠 Key Concepts
+
+### Local vs Remote
+
+```
 commit → local
 push   → remote (GitHub)
+```
