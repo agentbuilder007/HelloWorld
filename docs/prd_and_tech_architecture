@@ -1,0 +1,7 @@
+| PRD.md                             | Technical architecture + PR plan |
+| ---------------------------------- | -------------------------------- |
+| Defines **what to build**          | Defines **how to build it**      |
+| Product thinking                   | Engineering execution            |
+| Static document                    | Iterative workflow               |
+| Written once, updated occasionally | Used every day                   |
+| User + value focused               | System + delivery focused        |
